@@ -7,7 +7,9 @@ using namespace std;
 NOTE 1.
 
 STEPS OF MERGE SORT
-1. Divide 2.conquer 3.combine
+ 1 . Divide
+ 2 . conquer
+ 3 . combine
 
 */
 
