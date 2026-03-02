@@ -118,4 +118,6 @@ int main()
     {
         cout << Array[index] << ",";
     }
+
+    return 0;
 }
