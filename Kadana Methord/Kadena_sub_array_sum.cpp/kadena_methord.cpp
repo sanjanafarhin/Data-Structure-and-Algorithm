@@ -5,7 +5,7 @@ using namespace std;
 
 int Kadena_Method(vector<int>datas,int size)
 {
-    int Max_sum=0;
+    int Max_sum=datas[0];
     int sum=0;
 
     for(int i=0;i<size;i++)

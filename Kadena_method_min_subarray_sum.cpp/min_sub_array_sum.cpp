@@ -5,17 +5,15 @@ using namespace std;
 
 int Kadena_Method(vector<int>datas,int size)
 {
-    int min_sum=0;
-    int sum=0;
+    int min_sum=datas[0];
+    int sum=datas[0];
 
     for(int i=0;i<size;i++)
     {
         sum=sum+datas[i];
         min_sum=min(sum,min_sum);
-        if(sum > 0)
-        {
-            sum=0;
-        }
+        sum=min(datas[i],sum);
+        min_sum=min(min_sum,sum);
     }
     return min_sum;
 }
