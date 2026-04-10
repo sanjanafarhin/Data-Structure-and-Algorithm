@@ -30,7 +30,7 @@ int main()
     {
         cin >> data;
     }
-    int maximum_sub_array_sum=Kadena_Method(datas,num-1);
+    int maximum_sub_array_sum=Kadena_Method(datas,num);
 
     cout << "longest sub array sum :" << maximum_sub_array_sum;
 }
