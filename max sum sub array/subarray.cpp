@@ -12,14 +12,14 @@ struct sum_index
 
 sum_index crossing_sum(vector<int> datas, int low, int high, int mid)
 {   sum_index res;
-    int cross_index[2];
     int left = mid;
     int right = mid + 1;
     int left_sum = 0;
     int right_sum = 0;
-    int high_left_sum = INT_MIN;
+    int high_left_sum = INT_MIN; //for -infinity to + infinity
     int high_right_sum = INT_MIN;
-
+    
+    //left sum
     while (left >= 0)
     {
        left_sum = left_sum + datas[left];
@@ -33,6 +33,8 @@ sum_index crossing_sum(vector<int> datas, int low, int high, int mid)
         left--;
     }
 
+
+    //right sum
     while (right <= high)
     {
         right_sum = right_sum + datas[right];
@@ -62,10 +64,10 @@ sum_index Maximum_sub_array_sum(vector<int> datas, int low, int high)
     else
     {
         int mid = (high + low) / 2;
-        sum_index left = Maximum_sub_array_sum(datas, low, mid);
-        sum_index right = Maximum_sub_array_sum(datas, mid + 1, high);
-        sum_index crossing_sums = crossing_sum(datas, low, high, mid);
-
+        sum_index left = Maximum_sub_array_sum(datas, low, mid); //left cross sum
+        sum_index right = Maximum_sub_array_sum(datas, mid + 1, high); //right cross sum
+        sum_index crossing_sums = crossing_sum(datas, low, high, mid); //cross sum
+ 
         if (left.high_sum > crossing_sums.high_sum && left.high_sum > right.high_sum)
         {
             return left;
