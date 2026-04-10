@@ -100,12 +100,34 @@ int main()
 
     for(int i=0;i<number;i++)
     {
-        for(int j=0; j<4; j++)
+        cout << "highest number in section :" << i <<" "<< section[i][3] <<endl;
+        cout << "other's possitions are at section :" ;
+        for(int j=0;j<4;j++)
         {
-            
+            cout << section[i][j] << " ";
         }
-
+        cout <<"\n";
     }
+    int size = number * 4;
+    vector<int> combine (size);
+    
+    int index=0;
+
+    for(int i=0;i<number;i++)
+    {
+        for(int j=0;j<4;j++)
+        {
+            combine[index]=section[i][j];
+            index++;
+        }
+    }
+
+    Merge_sort(combine,0,combine.size()-1);
+
+     for(int j=0;j<combine.size()-1;j++)
+        {
+           cout << combine[index++] << " ";
+        }
 
 
 
