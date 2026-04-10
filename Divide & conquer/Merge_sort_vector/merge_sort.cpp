@@ -12,7 +12,7 @@ void Merge (vector<int>&datas,int low,int high,int mid)
 
    while(i<=mid && j<=high)
    {
-    if(datas[i]<datas[j])
+    if(datas[i]<=datas[j])
     {
         temp[temp_index++]=datas[i++];
     }
@@ -22,19 +22,19 @@ void Merge (vector<int>&datas,int low,int high,int mid)
     }
    }
 
-   for(;i<=mid;)
+   while(i<=mid)
    {
     temp[temp_index++]=datas[i++];
    }
 
-   for(;j<=high;)
+   while(j<=high)
    {
     temp[temp_index++]=datas[j++];
    }
 
    temp_index=0;
 
-   for(int a=low;a<high;a++)
+   for(int a=low;a<=high;a++)
    {
     datas[a]=temp[temp_index++];
    }
