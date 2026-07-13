@@ -54,8 +54,10 @@ void insertlast(int data)
     if (head == NULL)
     {
         listnode *tempnode = CREATE(data);
-        head = tempnode;
+        head = tempnode ; 
         tail = tempnode;
+
+        //both are assign as the first node 
     }
     else
     {
