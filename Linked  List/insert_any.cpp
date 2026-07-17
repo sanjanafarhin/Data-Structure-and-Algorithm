@@ -87,7 +87,7 @@ void Insert_any(int data,int position)
     int count=0;
     NODE* i=head;
 
-    while(i !=NULL)
+    while(i != NULL)
     {
         if(count == position)
         {
@@ -123,6 +123,7 @@ int main ()
 
 
         PRINT();
+
         Insert_any(10,4);
 
         PRINT();
