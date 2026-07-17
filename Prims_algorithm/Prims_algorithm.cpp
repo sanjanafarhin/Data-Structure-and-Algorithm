@@ -1,109 +1,150 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 
 using namespace std;
 
 struct Tree
 {
-    vector<int> MST;
+    vector<int> mst;
     int TOTALCOST;
-
 };
 
-Tree Prims(vector<vector<int>>data_graph, int start, int vertex)
+/*
+=========================================================
+                  Prim's Algorithm
+=========================================================
+
+Definition:
+Prim's Algorithm is a greedy algorithm used to find the
+Minimum Spanning Tree (MST) of a connected, weighted,
+undirected graph. It starts from any vertex and repeatedly
+adds the minimum weight edge that connects a visited vertex
+to an unvisited vertex.
+
+Algorithm Steps:
+1. Choose any vertex as the starting vertex.
+2. Mark the source vertex as visited.
+3. Add all adjacent edges of the source to a priority queue.
+4. Select the edge with the minimum weight.
+5. If the destination vertex is not visited:
+   - Add the edge to the MST.
+   - Mark the destination as visited.
+   - Add all adjacent edges of that vertex.
+6. Repeat until all vertices are visited.
+7. Print the MST edges and total cost.
+
+Time Complexity:
+O(E log V)
+
+Space Complexity:
+O(V + E)
+
+Where:
+V = Number of Vertices
+E = Number of Edges
+=========================================================
+*/
+
+Tree Prims(vector<vector<int> > data_graph, int start, int vertex)
 {
-    //creating priority queue
-    priority_queue < pair<int, pair<int,int>>, vector<pair<int,pair<int,int>>>, greater<pair<int,pair<int,int>>> > EdgeContainer;
+    // Priority Queue (Edge Cost, (Parent, Destination))
+    priority_queue<
+        pair<int, pair<int, int> >,
+        vector<pair<int, pair<int, int> > >,
+        greater<pair<int, pair<int, int> > >
+    > EdgeContainer;
 
-    //VISITED ARRAY
-    vector<bool>VISITED(vertex,false);
+    // Visited Array
+    vector<bool> VISITED(vertex, false);
 
-    //PARENTS
-    vector<int>Parents(vertex,0);
+    // Parent Array
+    vector<int> Parents(vertex, 0);
 
-    int Total=0;
+    int Total = 0;
 
-    VISITED[start]=true;
-    Parents[start]=start;
+    VISITED[start] = true;
+    Parents[start] = start;
 
-    for (int i=0; i<vertex; i++)
+    // Push all edges from the source vertex
+    for (int i = 0; i < vertex; i++)
     {
-        if(data_graph[start][i] > 0)
+        if (data_graph[start][i] > 0)
         {
-            int Edge_Cost= data_graph[start][i];
-            int parent = start;
-            int destination = i;
-
-            EdgeContainer.emplace(Edge_Cost, make_pair(parent,destination));
+            EdgeContainer.push(
+                make_pair(data_graph[start][i], make_pair(start, i))
+            );
         }
     }
 
-    while(!EdgeContainer.empty())
+    while (!EdgeContainer.empty())
     {
-        auto [Edge_Cost,edge]=EdgeContainer.top();
-        int parent=edge.first;
-        int destination=edge.second;
+        pair<int, pair<int, int> > current = EdgeContainer.top();
+        EdgeContainer.pop();
 
-        if(VISITED[destination]==false)
+        int Edge_Cost = current.first;
+        int parent = current.second.first;
+        int destination = current.second.second;
+
+        if (!VISITED[destination])
         {
-            VISITED[destination]=true;
-            Parents[destination]=parent;
-            Total+=Edge_Cost;
-            start=destination;
-            EdgeContainer.pop();
+            VISITED[destination] = true;
+            Parents[destination] = parent;
+            Total += Edge_Cost;
 
-            for (int i=0; i<vertex; i++)
+            start = destination;
+
+            // Push adjacent edges of the new vertex
+            for (int i = 0; i < vertex; i++)
             {
-                if(data_graph[start][i] > 0)
+                if (data_graph[start][i] > 0)
                 {
-                    int Edge_Cost= data_graph[start][i];
-                    int parent = start;
-                    int destination = i;
-
-                    EdgeContainer.emplace(Edge_Cost, make_pair(parent,destination));
+                    EdgeContainer.push(
+                        make_pair(data_graph[start][i], make_pair(start, i))
+                    );
                 }
             }
         }
-        else
-        {
-            EdgeContainer.pop();
-        }
-
-
     }
 
     Tree res;
-    res.MST=Parents;
-    res.TOTALCOST=Total;
+    res.mst = Parents;
+    res.TOTALCOST = Total;
 
     return res;
 }
 
 int main()
 {
-    cout << "ENTER THE NUMBER OF VERTEXES:" <<endl;
+    cout << "ENTER THE NUMBER OF VERTICES: ";
     int vertex;
     cin >> vertex;
 
-    vector<vector<int>>Graph(vertex,vector<int>(vertex));
-    for (int i=0; i<vertex; i++)
+    vector<vector<int> > Graph(vertex, vector<int>(vertex));
+
+    cout << "Enter the adjacency matrix:\n";
+    for (int i = 0; i < vertex; i++)
     {
-        for(int j=0; j<vertex; j++)
+        for (int j = 0; j < vertex; j++)
         {
             cin >> Graph[i][j];
         }
     }
 
+    cout << "Enter the source vertex: ";
     int source;
-    cout<< "source: " <<endl;
     cin >> source;
-    Tree res = Prims(Graph,source,vertex);
-    for(int i = 0; i < vertex; i++)
+
+    Tree res = Prims(Graph, source, vertex);
+
+    cout << "\nMinimum Spanning Tree:\n";
+    for (int i = 0; i < vertex; i++)
     {
-        if(i != res.MST[i])
+        if (i != res.mst[i])
         {
-            cout << res.MST[i] << " --> " << i << endl;
+            cout << res.mst[i] << " --> " << i << endl;
         }
     }
 
-    cout << "Total cost : " << res.TOTALCOST;
+    cout << "\nTotal Cost: " << res.TOTALCOST << endl;
+
+    return 0;
 }
